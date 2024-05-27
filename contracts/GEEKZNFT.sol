@@ -6,14 +6,13 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract GEEKZNFT is ERC721, Ownable {
     uint256 private _tokenIdCounter;
-    string public constant TOKEN_URI = "ipfs://QmR9iv9wFgb7UBcYg5rhen771swnbxALZg1K6EfY7mTbTr";
+    string public constant TOKEN_URI = "ipfs://QmXYAzy5NLJvwVCjMJ9pCZ2GF89wk4bGwyqZziEPk1ukKy";
 
-    constructor() ERC721("Geekz", "GKZ") Ownable(msg.sender) {}
+    constructor() ERC721("Geekz Angelz NFT", "GEEKZVIP") Ownable(msg.sender) {}
 
     function safeMint(address to) public onlyOwner returns (uint256 tokenId) {
         tokenId = _tokenIdCounter;
-        require(tokenId == 0, "Only one token can be minted");
-        
+        require(tokenId < 100, "Max supply is 100 NFTs");   
         _tokenIdCounter += 1;
         _safeMint(to, tokenId);
     }

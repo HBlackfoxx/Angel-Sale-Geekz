@@ -21,14 +21,14 @@ contract AngelSale is Ownable, IERC721Receiver {
 
     mapping (address => bool) public isBlacklist;
     mapping (address => bool) public claimed;
-    IERC20G public usdt = IERC20G(0x5b17ea4D0919F160fc85E937C7977E4D28Ee4307); // Address should be set to USDT contract
-    IERC20G public geekzToken = IERC20G(0x3ed5D2a643a744aB7D7242f827D457477dfCdFa1); // Address should be set to your token contract
-    IERC721G public geekzNFT = IERC721G(0xacf122f4C288443453f6fB114D07d22224d1c0f8); // Address should be set to your NFT contract
+    IERC20G public usdt = IERC20G(0xa29e9E81e1952d0c9b55C20017671eB505c3FCAD); // Address should be set to USDT contract
+    IERC20G public geekzToken = IERC20G(0x0C344EE96232586f485fa4af4bAF851501cAD54A); // Address should be set to GeekzToken contract
+    IERC721G public geekzNFT = IERC721G(0x36Cd40799d0710cd9bc70Bf84ffE7d588BE48074); // Address should be set to your NFT contract
 
-    address payable public paymentReceiver = payable(0x36cBb6351CA992F058E587e900E85E54a76e2A98); // Address for receiving payments
+    address public paymentReceiver = 0xbf3fd8b071BA8BA2191471500b45020872eb4dE0; // Address for receiving payments
 
-    uint256 public  salePrice = 2500 * 10 ** usdt.decimals(); // 2500 USDT
-    uint256 public  tokenPerSale = 250000000000 * 10 ** geekzToken.decimals(); // 250 billion tokens
+    uint256 public  salePrice = 1000 * 10 ** usdt.decimals(); // 1000 USDT
+    uint256 public  tokenPerSale = 100_000_000_000 * 10 ** geekzToken.decimals(); // 100 billion tokens
     uint256 public maxSales = 100;
     uint256 public saleCount;
     bool public presaleStarted;
@@ -68,8 +68,8 @@ contract AngelSale is Ownable, IERC721Receiver {
         presaleClosed = true;
     }
 
-    function changeFundReceiver(address payable _paymentReceiver) external onlyOwner{
-        paymentReceiver=_paymentReceiver;
+    function changeFundReceiver(address _paymentReceiver) external onlyOwner{
+        paymentReceiver =_paymentReceiver;
     }
 
     function setBlacklist(address _addr,bool _state) external onlyOwner{
