@@ -21,11 +21,11 @@ contract AngelSale is Ownable, IERC721Receiver {
 
     mapping (address => bool) public isBlacklist;
     mapping (address => bool) public claimed;
-    IERC20G public usdt = IERC20G(0xa29e9E81e1952d0c9b55C20017671eB505c3FCAD); // Address should be set to USDT contract
-    IERC20G public geekzToken = IERC20G(0x0C344EE96232586f485fa4af4bAF851501cAD54A); // Address should be set to GeekzToken contract
-    IERC721G public geekzNFT = IERC721G(0x36Cd40799d0710cd9bc70Bf84ffE7d588BE48074); // Address should be set to your NFT contract
+    IERC20G public usdt = IERC20G(0x55d398326f99059fF775485246999027B3197955); // Address should be set to USDT contract
+    IERC20G public geekzToken = IERC20G(0x035f61905dDC716e34c8C3A26a81950C993245A2); // Address should be set to GeekzToken contract
+    IERC721G public geekzNFT = IERC721G(0xD628f36fef90F20b8a4EAda64D1baD5aA2d7dee4); // Address should be set to your NFT contract
 
-    address public paymentReceiver = 0xbf3fd8b071BA8BA2191471500b45020872eb4dE0; // Address for receiving payments
+    address public paymentReceiver = 0xFd739c94B179A9376fb5dd22CF9CC61a853fFF26; // Address for receiving payments
 
     uint256 public  salePrice = 1000 * 10 ** usdt.decimals(); // 1000 USDT
     uint256 public  tokenPerSale = 100_000_000_000 * 10 ** geekzToken.decimals(); // 100 billion tokens
@@ -58,13 +58,13 @@ contract AngelSale is Ownable, IERC721Receiver {
     }
 
     function startPresale() external onlyOwner {
-        require(!presaleStarted, "Presale already started");
+        require(!presaleStarted, "Angelsale already started");
         presaleStarted = true;
         geekzToken.safeTransferFrom(_msgSender(),address(this), tokenPerSale * maxSales);
     }
 
     function stopPresale() external onlyOwner {
-        require(!presaleClosed, "Presale already closed");
+        require(!presaleClosed, "Angelsale already closed");
         presaleClosed = true;
     }
 
@@ -77,13 +77,13 @@ contract AngelSale is Ownable, IERC721Receiver {
     }
 
     function WithdrawRemainingTokens() external onlyOwner{
-        require(presaleClosed,"Presale: Presale is not closed yet");
+        require(presaleClosed,"Angelsale: Angelsale is not closed yet");
         geekzToken.safeTransfer(owner(), geekzToken.balanceOf(address(this)));
     }
 
     function recoverERC20(address tokenAddress, uint256 tokenAmount) external onlyOwner {
         IERC20G Tokenadd = IERC20G(tokenAddress);
-        require(Tokenadd != geekzToken, "You cannot recover Presale token");
+        require(Tokenadd != geekzToken, "You cannot recover Angelsale token");
         Tokenadd.transfer(owner(), tokenAmount);
         emit Recovered(tokenAddress, tokenAmount);
     }
